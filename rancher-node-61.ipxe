@@ -1,0 +1,27 @@
+#!ipxe
+# 
+# Full list of all iPXE commands:  http://ipxe.org/cfg
+
+# Setting for all servers 
+#    Source: http://ipxe.org/settings
+ifopen net0
+set net0/netmask 255.255.255.0
+set net0/gateway 192.168.7.1
+set net0/dns 1.1.1.1
+
+# Settings per server
+set net0/ip 192.168.7.61
+set hostname rancher-61
+
+# Display network settings during boot
+ifstat
+route
+show net0/dns
+
+prompt --key 0x02 --timeout 3000 Press Ctrl-B for the iPXE command prompt... && shell ||
+
+# Boot a persistent RancherOS to RAM with specific cloug-config file
+set base-url http://releases.rancher.com/os/latest
+kernel ${base-url}/vmlinuz rancher.state.dev=LABEL=RANCHER_STATE rancher.state.autoformat=[/dev/sda] rancher.cloud_init.datasources=[url:https://github.com/bgant/ipxe-scripts/raw/master/cloud-config-61]
+initrd ${base-url}/initrd
+boot

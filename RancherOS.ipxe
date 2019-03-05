@@ -5,6 +5,6 @@ dhcp
 
 # Boot a persistent RancherOS to RAM
 set base-url http://releases.rancher.com/os/latest
-kernel ${base-url}/vmlinuz rancher.state.dev=LABEL=RANCHER_STATE rancher.state.autoformat=[/dev/sda] rancher.cloud_init.datasources=[url:http://github.com/bgant/rancher-setup/raw/master/cloud-config-ssh]
+kernel ${base-url}/vmlinuz rancher.state.dev=LABEL=RANCHER_STATE rancher.state.autoformat=[/dev/sda] rancher.cloud_init.datasources=[url:http://github.com/bgant/ipxe-scripts/raw/master/cloud-config-ssh]
 initrd ${base-url}/initrd
 boot
