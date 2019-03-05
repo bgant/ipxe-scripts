@@ -1,0 +1,7 @@
+#!ipxe
+
+# Use DHCP IP and DNS settings
+dhcp
+
+# Load ipxe.org Demo
+chain http://boot.ipxe.org/demo/boot.php
