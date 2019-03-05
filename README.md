@@ -13,9 +13,9 @@ From an **Ubuntu 18.04** VM or `sudo docker run -it ubuntu bash` container we bu
 ```
 sudo apt-get install git build-essential liblzma-dev
 git clone http://git.ipxe.org/ipxe.git
+git clone https://github.com/bgant/ipxe-scripts
 cd ipxe/src/
-wget https://github.com/bgant/ipxe-scripts/raw/master/demo.ipxe
-make bin/8086100e.rom EMBED=demo.ipxe
+make bin/8086100e.rom EMBED=../../ipxe-scripts/demo.ipxe
 scp bin/8086100e.rom user@<QEMU Server IP>:
 ```
 On the **QEMU/KVM server** your new ROM files can be anywhere and have any name, but I gave mine longer names and put them in with the rest of the QEMU ROM files:
@@ -34,8 +34,7 @@ https://rancher.com/docs/os/v1.x/en/installation/running-rancheros/server/pxe/
 
 From an **Ubuntu 18.04** VM or `sudo docker run -it ubuntu bash` container we build from source (http://ipxe.org/download) and embed (https://ipxe.org/embed) our ipxe script in the ROM image:
 ```
-wget https://github.com/bgant/ipxe-scripts/raw/master/RancherOS.ipxe
-make bin/1af41000.rom EMBED=RancherOS.ipxe
+make bin/1af41000.rom EMBED=../../ipxe-scripts/RancherOS.ipxe
 scp bin/1af41000.rom user@<QEMU Server IP>:
 ```
 
