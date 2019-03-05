@@ -41,7 +41,7 @@ scp bin/1af41000.rom user@<QEMU Server IP>:
 
 On the **QEMU/KVM server** your new ROM files can be anywhere and have any name:
 ```
-mv iaf41000.rom /usr/share/qemu/ipxe-1af41000-virtio-RancherOS.rom
+mv 1af41000.rom /usr/share/qemu/ipxe-1af41000-virtio-RancherOS.rom
 virsh edit <VM Name>
    In the <interface type='direct'> network block
    <model type='virtio'/> 
