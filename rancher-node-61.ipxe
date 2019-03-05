@@ -1,17 +1,18 @@
 #!ipxe
-# 
-# List of all iPXE commands:  http://ipxe.org/cmd
-# List of all iPXE settings:  http://ipxe.org/cfg
+#
+# iPXE network booting without a DHCP Server
+#     List of all iPXE commands:  http://ipxe.org/cmd
+#     List of all iPXE settings:  http://ipxe.org/cfg
 
 # Network settings for all servers 
 #    Source: http://ipxe.org/settings
 ifopen net0
 set net0/netmask 255.255.255.0
-set net0/gateway 192.168.7.1
+set net0/gateway 10.0.6.1
 set net0/dns 1.1.1.1
 
 # Network settings per server
-set net0/ip 192.168.7.61
+set net0/ip 10.0.6.61
 set hostname rancher-node-61
 
 # Display network settings during boot
