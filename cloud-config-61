@@ -5,7 +5,7 @@ ssh_authorized_keys:
 rancher:
   network:
     interfaces:
-      eth1:
+      eth0:
         address: 192.168.7.61/24
         gateway: 192.168.7.1
         mtu: 1500
