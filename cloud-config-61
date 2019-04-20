@@ -1,5 +1,10 @@
 #cloud-config
+# 
+# Copy settings from: sudo ros config export
 rancher:
+  # enable/disable VM console autologin
+  enable:
+  - autologin
   network:
     dns:
       nameservers:
