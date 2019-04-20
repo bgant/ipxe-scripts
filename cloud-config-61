@@ -7,6 +7,8 @@ rancher:
         gateway: 192.168.7.1
         mtu: 1500
         dhcp: false
+rancher:
+  network:
     dns:
       nameservers:
         - 1.1.1.1
