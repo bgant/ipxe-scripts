@@ -1,9 +1,6 @@
 #cloud-config
 rancher:
   network:
-    dns:
-      nameservers:
-        - 1.1.1.1
     interfaces:
       eth0:
         address: 192.168.7.61/24
