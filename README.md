@@ -14,6 +14,7 @@ From an **Ubuntu 18.04** VM or `sudo docker run -it ubuntu bash` container we bu
 sudo apt-get install git build-essential liblzma-dev
 git clone http://git.ipxe.org/ipxe.git
 git clone https://github.com/bgant/ipxe-scripts
+vi ipxe/src/config/general.h -OR- cp ipxe-scripts/ipxe/src/config/general.h ipxe/src/config/
 cd ipxe/src/
 make bin/8086100e.rom EMBED=../../ipxe-scripts/demo.ipxe
 scp bin/8086100e.rom user@<QEMU Server IP>:

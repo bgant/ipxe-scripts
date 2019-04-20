@@ -12,8 +12,8 @@ set net0/gateway 10.0.6.1
 set net0/dns 1.1.1.1
 
 # Network settings per server
-set net0/ip 10.0.6.61
-set hostname rancher-node-61
+set net0/ip 10.0.6.150
+set hostname rancher-mqtt
 
 # Display network settings during boot
 ifstat
@@ -25,6 +25,6 @@ prompt --key 0x02 --timeout 3000 Press Ctrl-B for the iPXE command prompt... && 
 
 # Boot a persistent RancherOS to RAM with specific cloug-config file
 set base-url http://releases.rancher.com/os/latest
-kernel ${base-url}/vmlinuz rancher.state.dev=LABEL=RANCHER_STATE rancher.state.autoformat=[/dev/sda] rancher.cloud_init.datasources=[url:https://github.com/bgant/ipxe-scripts/raw/master/cloud-config-61]
+kernel ${base-url}/vmlinuz rancher.state.dev=LABEL=RANCHER_STATE rancher.state.autoformat=[/dev/sda] rancher.cloud_init.datasources=[url:https://github.com/bgant/ipxe-scripts/raw/master/cloud-config-rancher-mqtt]
 initrd ${base-url}/initrd
 boot
