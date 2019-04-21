@@ -8,11 +8,11 @@
 #    Source: http://ipxe.org/settings
 ifopen net0
 set net0/netmask 255.255.255.0
-set net0/gateway 192.168.7.1
+set net0/gateway 192.168.6.1
 set net0/dns 1.1.1.1
 
 # Network settings per server
-set net0/ip 192.168.7.150
+set net0/ip 192.168.6.150
 set hostname rancher-mqtt
 
 # Display network settings during boot
