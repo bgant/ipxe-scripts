@@ -25,6 +25,6 @@ prompt --key 0x02 --timeout 3000 Press Ctrl-B for the iPXE command prompt... && 
 
 # Boot a persistent RancherOS to RAM with specific cloug-config file
 set base-url http://releases.rancher.com/os/latest
-kernel ${base-url}/vmlinuz rancher.state.dev=LABEL=RANCHER_STATE rancher.state.autoformat=[/dev/sda] rancher.autologin=tty1 rancher.cloud_init.datasources=[url:http://raw.githubuserconent.com/bgant/ipxe-scripts/master/cloud-config-rancher-mqtt]
+kernel ${base-url}/vmlinuz rancher.state.dev=LABEL=RANCHER_STATE rancher.state.autoformat=[/dev/sda] rancher.autologin=tty1 rancher.cloud_init.datasources=[url:http://raw.githubuserconent.com/bgant/ipxe-scripts/master/cloud-config-rancher-static]
 initrd ${base-url}/initrd
 boot
