@@ -12,6 +12,8 @@ rancher:
         dhcp: false
         gateway: 10.0.6.1
         mtu: 1500
+      eth1:
+        dhcp: false
   services:
     mqtt:
       image: eclipse-mosquitto
