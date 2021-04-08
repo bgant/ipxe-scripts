@@ -6,7 +6,7 @@ The `demo.ipxe` script contains a few lines to boot a demo Linux kernel directly
 ```
 #!ipxe
 dhcp
-chainload http://boot.ipxe.org/demo/boot.php
+chain http://boot.ipxe.org/demo/boot.php
 ```
 
 From an **Ubuntu 18.04** VM or `sudo docker run -it ubuntu bash` container we build from source (http://ipxe.org/download) and embed (https://ipxe.org/embed) our ipxe script in the ROM image:
