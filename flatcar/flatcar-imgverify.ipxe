@@ -1,0 +1,17 @@
+#!ipxe
+
+# Source: https://ipxe.org/scripting
+:retry_dhcp
+dhcp && isset ${filename} || goto retry_dhcp
+
+# Source: https://ipxe.org/cmd/imgverify and https://ipxe.org/cmd/imgtrust
+set base_url http://192.168.7.119
+kernel ${base-url}/flatcar_production_pxe.vmlinuz
+initrd ${base-url}/flatcar_production_pxe_image.cpio.gz
+imgstat
+imgverify flatcar_production_pxe.vmlinuz ${base-url}/flatcar_production_pxe.vmlinuz.sig
+imgverify flatcar_production_pxe_image.cpio.gz ${base-url}/flatcar_production_pxe_image.cpio.gz.sig
+imgstat
+boot
+
+# imgverify does not work even though IMAGE_TRUST_CMD should be enabled in config/local/general.h

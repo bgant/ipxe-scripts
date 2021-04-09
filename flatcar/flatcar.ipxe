@@ -1,0 +1,12 @@
+#!ipxe
+
+# Source: https://ipxe.org/scripting
+:retry_dhcp
+dhcp && isset ${filename} || goto retry_dhcp
+
+# Source: https://kinvolk.io/docs/flatcar-container-linux/latest/installing/bare-metal/booting-with-ipxe/
+set base-url http://192.168.7.119
+kernel ${base-url}/flatcar_production_pxe.vmlinuz initrd=flatcar_production_pxe_image.cpio.gz flatcar.first_boot=1 ignition.config.url=${base-url}/pxe-config.ign
+initrd ${base-url}/flatcar_production_pxe_image.cpio.gz
+boot
+
