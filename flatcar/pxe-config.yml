@@ -11,11 +11,19 @@ storage:
   filesystems:
     - name: localdisk
       mount:
-        device: /dev/disk/by-partlabel/DOCKER
+        device: /dev/disk/by-partlabel/LOCALDISK
         format: ext4
         wipe_filesystem: false
+  links:
+    - filesystem: root
+      path: /opt/rke/var/lib/kubelet
+      target: /var/lib/kubelet
 systemd:
   units:
+    # iSCSI daemon is used by Longhorn
+    - name: iscsid.service
+      enabled: true
+    # Mount Local Disk as /var/lib for Rancher and Longhorn persistence
     - name: var-lib.mount
       enable: true
       contents: |
@@ -23,7 +31,7 @@ systemd:
         Description=Mount as /var/lib
         Before=local-fs.target
         [Mount]
-        What=/dev/disk/by-partlabel/DOCKER
+        What=/dev/disk/by-partlabel/LOCALDISK
         Where=/var/lib
         Type=ext4
         [Install]
