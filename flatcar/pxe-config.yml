@@ -9,15 +9,20 @@ passwd:
 # Don't wipe so that Longhorn volumes will persist across reboots
 storage:
   filesystems:
-    - name: localdisk
+    - name: lib
       mount:
-        device: /dev/disk/by-partlabel/LOCALDISK
+        device: /dev/disk/by-partlabel/LIB
         format: ext4
-        wipe_filesystem: true
-  links:
-    - filesystem: root
-      path: /opt/rke/var/lib
-      target: /var/lib
+        wipe_filesystem: false
+    - name: opt
+      mount:
+        device: /dev/disk/by-partlabel/OPT
+        format: ext4
+        wipe_filesystem: false
+#  links:
+#    - filesystem: root
+#      path: /opt
+#      target: /var/lib/opt
 systemd:
   units:
     # iSCSI daemon is used by Longhorn
@@ -31,8 +36,20 @@ systemd:
         Description=Mount as /var/lib
         Before=local-fs.target
         [Mount]
-        What=/dev/disk/by-partlabel/LOCALDISK
+        What=/dev/disk/by-partlabel/LIB
         Where=/var/lib
+        Type=ext4
+        [Install]
+        WantedBy=local-fs.target
+    - name: opt.mount
+      enable: true
+      contents: |
+        [Unit]
+        Description=Mount as /opt
+        Before=local-fs.target
+        [Mount]
+        What=/dev/disk/by-partlabel/OPT
+        Where=/opt
         Type=ext4
         [Install]
         WantedBy=local-fs.target
