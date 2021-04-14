@@ -6,24 +6,24 @@ passwd:
         - ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAFoHGL2y7gDaRObMhcs/coPsLgOllAQicAu2Tja3fPW6CKZ4tMoDeMXZ/A2Wi/w9OtiTD7aAn1b51ZyaL3rSGyc3wDL94SQgOPKDIRaJgF5zpgKRBM3C0Qrt1Vc7pO4qR3GJoWq90k+DJSFoEiS52t2exqhrUlUmjsEqsvYN+IzgYo6+g==
 
 # Source: https://kinvolk.io/docs/flatcar-container-linux/latest/setup/storage/mounting-storage/#use-attached-storage-for-docker
-# Don't wipe so that Longhorn volumes will persist across reboots
 storage:
   filesystems:
-    - name: localdisk
+    - name: lib
       mount:
-        device: /dev/disk/by-partlabel/LOCALDISK
+        device: /dev/disk/by-partlabel/LIB
         format: ext4
-        wipe_filesystem: true
-  links:
-    - filesystem: root
-      path: /opt/rke/var/lib
-      target: /var/lib
+        wipe_filesystem: false
+    - name: opt
+      mount:
+        device: /dev/disk/by-partlabel/OPT
+        format: ext4
+        wipe_filesystem: false
 systemd:
   units:
     # iSCSI daemon is used by Longhorn
     - name: iscsid.service
       enabled: true
-    # Mount Local Disk as /var/lib for Rancher and Longhorn persistence
+    # Local disk persistence for Docker (/var/lib/docker) and Longhorn (/var/lib/longhorn)
     - name: var-lib.mount
       enable: true
       contents: |
@@ -31,8 +31,21 @@ systemd:
         Description=Mount as /var/lib
         Before=local-fs.target
         [Mount]
-        What=/dev/disk/by-partlabel/LOCALDISK
+        What=/dev/disk/by-partlabel/LIB
         Where=/var/lib
+        Type=ext4
+        [Install]
+        WantedBy=local-fs.target
+    # Persistence needed for Rancher Kubernetes Engine (RKE)
+    - name: opt.mount
+      enable: true
+      contents: |
+        [Unit]
+        Description=Mount as /opt
+        Before=local-fs.target
+        [Mount]
+        What=/dev/disk/by-partlabel/OPT
+        Where=/opt
         Type=ext4
         [Install]
         WantedBy=local-fs.target
