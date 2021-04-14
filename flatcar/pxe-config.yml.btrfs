@@ -1,8 +1,11 @@
 # ct < pxe-config.yml.btrfs > pxe-config.ign
 # scp pxe-config.ign <user>@<server>:<wwwroot>
 # 
-# Source: https://kinvolk.io/docs/flatcar-container-linux/latest/setup/storage/mounting-storage/
-# Source: https://kinvolk.io/docs/flatcar-container-linux/latest/provisioning/config-transpiler/configuration/
+# Sources:
+#   https://kinvolk.io/docs/flatcar-container-linux/latest/setup/storage/mounting-storage/
+#   https://kinvolk.io/docs/flatcar-container-linux/latest/provisioning/config-transpiler/configuration/
+#   https://linuxhint.com/btrfs-filesystem-beginner-guide/
+#   https://linuxhint.com/create-mount-btrfs-subvolumes/
 
 passwd:
   users:
