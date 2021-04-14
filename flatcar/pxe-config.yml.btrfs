@@ -1,0 +1,87 @@
+# ct < pxe-config.yml.btrfs > pxe-config.ign
+# scp pxe-config.ign <user>@<server>:<wwwroot>
+# 
+# Source: https://kinvolk.io/docs/flatcar-container-linux/latest/setup/storage/mounting-storage/
+# Source: https://kinvolk.io/docs/flatcar-container-linux/latest/provisioning/config-transpiler/configuration/
+
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        # cat ~/rke-rancher/rke-ecdsa.pub
+        - ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAFoHGL2y7gDaRObMhcs/coPsLgOllAQicAu2Tja3fPW6CKZ4tMoDeMXZ/A2Wi/w9OtiTD7aAn1b51ZyaL3rSGyc3wDL94SQgOPKDIRaJgF5zpgKRBM3C0Qrt1Vc7pO4qR3GJoWq90k+DJSFoEiS52t2exqhrUlUmjsEqsvYN+IzgYo6+g==
+
+# Manually create btrfs file system on Local Disk:
+#   sudo gparted
+#   <use entire disk for btrfs partition with Partition Name LOCALDISK>
+#   sudo btrfs subvolume create /media/<UUID>/opt
+#   sudo btrfs subvolume create /media/<UUID>/docker
+#   sudo btrfs subvolume create /media/<UUID>/longhorn
+#   sudo btrfs subvolume list /media/<UUID>
+storage:
+  filesystems:
+    - name: localdisk
+      mount:
+        device: /dev/disk/by-partlabel/LOCALDISK
+        format: btrfs
+        wipe_filesystem: false
+systemd:
+  units:
+    # iSCSI daemon is used by Longhorn
+    - name: iscsid.service
+      enabled: true
+
+    # Local disk persistence for Rancher RKE (/opt)
+    - name: var-lib-opt.mount
+      enable: true
+      contents: |
+        [Unit]
+        Description=Mount btrfs subvolume as /opt
+        Before=local-fs.target
+        [Mount]
+        What=/dev/disk/by-partlabel/LOCALDISK
+        Where=/var/lib/opt
+        Type=btrfs
+        Options=subvol=opt
+        [Install]
+        WantedBy=local-fs.target
+
+    # Local disk persistence for Rancher Longhorn (/var/lib/longhorn)
+    - name: var-lib-longhorn.mount
+      enable: true
+      contents: |
+        [Unit]
+        Description=Mount btrfs subvolume as /var/lib/longhorn
+        Before=local-fs.target
+        [Mount]
+        What=/dev/disk/by-partlabel/LOCALDISK
+        Where=/var/lib/longhorn
+        Type=btrfs
+        Options=subvol=longhorn
+        [Install]
+        WantedBy=local-fs.target
+
+    # Local disk persistence for Docker (/var/lib/docker)
+    - name: var-lib-docker.mount
+      enable: true
+      contents: |
+        [Unit]
+        Description=Mount btrfs subvolume as /var/lib/docker
+        Before=local-fs.target
+        [Mount]
+        What=/dev/disk/by-partlabel/LOCALDISK
+        Where=/var/lib/docker
+        Type=btrfs
+        Options=subvol=docker
+        [Install]
+        WantedBy=local-fs.target
+    - name: docker.service
+      dropins:
+        - name: 10-wait-docker.conf
+          contents: |
+            [Unit]
+            After=var-lib-docker.mount
+            Requires=var-lib-docker.mount
+docker:
+  flags:
+    - --insecure-registry registry.localdomain:5000

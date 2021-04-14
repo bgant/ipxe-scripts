@@ -1,3 +1,9 @@
+# ct < pxe-config.yml.ext4 > pxe-config.ign
+# scp pxe-config.ign <user>@<server>:<wwwroot>
+# 
+# Source: https://kinvolk.io/docs/flatcar-container-linux/latest/setup/storage/mounting-storage/
+# Source: https://kinvolk.io/docs/flatcar-container-linux/latest/provisioning/config-transpiler/configuration/
+
 passwd:
   users:
     - name: core
@@ -5,7 +11,10 @@ passwd:
         # cat ~/rke-rancher/rke-ecdsa.pub
         - ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAFoHGL2y7gDaRObMhcs/coPsLgOllAQicAu2Tja3fPW6CKZ4tMoDeMXZ/A2Wi/w9OtiTD7aAn1b51ZyaL3rSGyc3wDL94SQgOPKDIRaJgF5zpgKRBM3C0Qrt1Vc7pO4qR3GJoWq90k+DJSFoEiS52t2exqhrUlUmjsEqsvYN+IzgYo6+g==
 
-# Source: https://kinvolk.io/docs/flatcar-container-linux/latest/setup/storage/mounting-storage/#use-attached-storage-for-docker
+# Manually create ext4 volumes on local disk:
+#    sudo gparted
+#    5GB ext4 with Partition Name OPT
+#    rest of disk with ext4 Partition Name LIB
 storage:
   filesystems:
     - name: lib
