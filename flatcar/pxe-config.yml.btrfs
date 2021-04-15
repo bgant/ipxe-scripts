@@ -15,12 +15,12 @@ passwd:
         - ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAFoHGL2y7gDaRObMhcs/coPsLgOllAQicAu2Tja3fPW6CKZ4tMoDeMXZ/A2Wi/w9OtiTD7aAn1b51ZyaL3rSGyc3wDL94SQgOPKDIRaJgF5zpgKRBM3C0Qrt1Vc7pO4qR3GJoWq90k+DJSFoEiS52t2exqhrUlUmjsEqsvYN+IzgYo6+g==
 
 # Manually create btrfs file system on Local Disk:
-#   sudo gparted
-#   <use entire disk for btrfs partition with Partition Name LOCALDISK>
-#   sudo btrfs subvolume create /media/<UUID>/opt
-#   sudo btrfs subvolume create /media/<UUID>/docker
-#   sudo btrfs subvolume create /media/<UUID>/longhorn
-#   sudo btrfs subvolume list /media/<UUID>
+#   lsblk
+#   sudo parted --script /dev/sdX mklabel gpt mkpart "LOCALDISK" btrfs 1MB 100%
+#   sudo mount /dev/disk/by-partlabel/LOCALDISK /mnt
+#   sudo btrfs subvolume create /mnt/<UUID>/opt
+#   sudo btrfs subvolume create /mnt/<UUID>/docker
+#   sudo btrfs subvolume create /mnt/<UUID>/longhorn
 storage:
   filesystems:
     - name: localdisk
