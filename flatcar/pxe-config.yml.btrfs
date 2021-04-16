@@ -35,7 +35,7 @@ systemd:
       enabled: true
 
     # Local disk persistence for Rancher RKE (/opt)
-    - name: var-lib-opt.mount
+    - name: opt.mount
       enable: true
       contents: |
         [Unit]
@@ -43,7 +43,7 @@ systemd:
         Before=local-fs.target
         [Mount]
         What=/dev/disk/by-partlabel/LOCALDISK
-        Where=/var/lib/opt
+        Where=/opt
         Type=btrfs
         Options=subvol=opt
         [Install]
