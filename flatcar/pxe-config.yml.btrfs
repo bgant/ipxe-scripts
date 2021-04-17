@@ -7,9 +7,10 @@
 #   https://linuxhint.com/btrfs-filesystem-beginner-guide/
 #   https://linuxhint.com/create-mount-btrfs-subvolumes/
 
+# Rancher RKE needs root access to work across reboots
 passwd:
   users:
-    - name: core
+    - name: root
       ssh_authorized_keys:
         # cat ~/rke-rancher/rke-ecdsa.pub
         - ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAFoHGL2y7gDaRObMhcs/coPsLgOllAQicAu2Tja3fPW6CKZ4tMoDeMXZ/A2Wi/w9OtiTD7aAn1b51ZyaL3rSGyc3wDL94SQgOPKDIRaJgF5zpgKRBM3C0Qrt1Vc7pO4qR3GJoWq90k+DJSFoEiS52t2exqhrUlUmjsEqsvYN+IzgYo6+g==
