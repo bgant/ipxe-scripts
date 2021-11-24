@@ -1,4 +1,8 @@
-# Scripts and Config files for Rancher Kubernetes Cluster
+# Network Boot with iPXE
+
+## Flatcar Linux
+
+The `Flatcar` directory contains the files used to network boot the latest [Flatcar Linux](https://www.flatcar-linux.org/) image from an NFS server. Each computer has BTRFS volume with subvolumes used by the [Rancher Kubernetes Engine (RKE)](https://rancher.com/products/rke).
 
 ## iPXE: Boot ipxe.org Demo in QEMU/KVM with e1000 driver
 
